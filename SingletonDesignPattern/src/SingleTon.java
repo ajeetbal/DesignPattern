@@ -2,8 +2,9 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 
 public class SingleTon implements Cloneable, Serializable {
+	// added volatile keyword to restrict half created object
 
-	private static SingleTon soleInstance = null;
+	private static volatile SingleTon soleInstance = null;
 
 	private SingleTon() {
 		super();
@@ -15,13 +16,24 @@ public class SingleTon implements Cloneable, Serializable {
 	}
 
 	public static synchronized SingleTon getInstance() {
-		// added synchronized to handle multithread violation
-		if (soleInstance == null) {
-			synchronized (SingleTon.class) {
-				soleInstance = new SingleTon();
-			}
-		}
-		return soleInstance;
+//		// added synchronized to handle multithread violation
+//
+//		// double check lock
+//		if (soleInstance == null) { // check1
+//			synchronized (SingleTon.class) {
+//				if (soleInstance == null) { // check 2
+//					soleInstance = new SingleTon();
+//				}
+//			}
+//		}
+//		return soleInstance;
+
+		return Holder.INSTANCE;
+	}
+
+	// using static Singleton Holder
+	static class Holder {
+		static final SingleTon INSTANCE = new SingleTon();
 	}
 
 	@Override

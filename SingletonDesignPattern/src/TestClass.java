@@ -2,8 +2,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Constructor;
 
 public class TestClass {
 	public static void main(String[] args) throws Exception {
@@ -37,9 +35,16 @@ public class TestClass {
 		// 4.multithreaded access
 		// 5.multiple classLoader
 
+		SingletonEnum singletonEnum=SingletonEnum.INSTANCE;
+		prints("singletonEnum", singletonEnum);
+		
 	}
 
 	private static void print(String name, SingleTon obj) {
 		System.out.println(String.format("Object : %s,Hashcode :%d", name, obj.hashCode()));
 	}
+	private static void prints(String name, SingletonEnum obj) {
+		System.out.println(String.format("Object : %s,Hashcode :%d", name, obj.hashCode()));
+	}
+	
 }
